@@ -1,0 +1,19 @@
+{
+  "name": "gofintech/allegro-http-client",
+  "description": "Allegro extension for calling HTTP micro services",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Antanas Kompanas",
+      "email": "a.kompanas@gofintech.lt"
+    }
+  ],
+  "require": {
+    "php": ">=7.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "GoFinTech\\Allegro\\Http\\": "src/"
+    }
+  }
+}
