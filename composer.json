@@ -11,7 +11,8 @@
   "require": {
     "php": ">=7.2",
     "guzzlehttp/guzzle": "^6.3",
-    "gofintech/serializer": "^1.2"
+    "gofintech/serializer": "^1.2",
+    "ocramius/proxy-manager": "^2.2"
   },
   "autoload": {
     "psr-4": {

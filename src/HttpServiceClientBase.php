@@ -61,7 +61,7 @@ class HttpServiceClientBase
             $me = get_class($this);
             throw new RuntimeException("Service call to $uri from $me failed: {$e->getMessage()}", 0, $e);
         }
-        if (empty($responseClass)) {
+        if (empty($responseClass) || $responseClass == 'void') {
             return null;
         }
         return $this->serializer->deserialize($resp->getBody()->getContents(), $responseClass, 'json');
