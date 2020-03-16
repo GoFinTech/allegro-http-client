@@ -39,7 +39,6 @@ class HttpServiceClientBase
      * @param string $uri
      * @param mixed $request
      * @param string $responseClass
-     * @param array $options
      * @return mixed
      */
     protected function callService(string $uri, $request, $responseClass = null)
