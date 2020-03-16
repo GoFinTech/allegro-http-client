@@ -24,24 +24,27 @@ class HttpServiceClientBase
     protected $httpClient;
     /** @var SerializerInterface */
     protected $serializer;
+    protected $options;
 
-    public function __construct(string $endpoint, ?SerializerInterface $serializer = null)
+    public function __construct(string $endpoint, ?SerializerInterface $serializer = null, array $options = [])
     {
         $this->httpClient = new GuzzleClient([
             'base_uri' => $endpoint
         ]);
         $this->serializer = $serializer ?? SerializerFactory::create();
+        $this->options = $options;
     }
 
     /**
      * @param string $uri
      * @param mixed $request
      * @param string $responseClass
+     * @param array $options
      * @return mixed
      */
     protected function callService(string $uri, $request, $responseClass = null)
     {
-        $options = [];
+        $options = $this->options;
         $headers = [];
         if (is_null($request)) {
             $method = 'GET';

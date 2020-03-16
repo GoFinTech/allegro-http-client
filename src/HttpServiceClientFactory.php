@@ -28,6 +28,8 @@ class HttpServiceClientFactory
 {
     /** @var SerializerInterface|null */
     private $serializer;
+    /** @var array */
+    private $options = [];
 
     public function __construct(?SerializerInterface $serializer = null)
     {
@@ -36,8 +38,12 @@ class HttpServiceClientFactory
 
     public function newClient(string $interfaceName, string $endpoint)
     {
-        $client = new ServiceClientProxy($interfaceName, $endpoint, $this->serializer);
+        $client = new ServiceClientProxy($interfaceName, $endpoint, $this->serializer, $this->options);
         $factory = new RemoteObjectFactory($client);
         return $factory->createProxy($interfaceName);
+    }
+
+    public function setOptions(array $options) {
+        $this->options = $options;
     }
 }
