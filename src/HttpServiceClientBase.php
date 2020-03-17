@@ -30,7 +30,7 @@ class HttpServiceClientBase
     {
         $this->httpClient = new GuzzleClient([
             'base_uri' => $endpoint
-        ]);
+        ] + $this->options);
         $this->serializer = $serializer ?? SerializerFactory::create();
         $this->options = $options;
     }
@@ -43,7 +43,7 @@ class HttpServiceClientBase
      */
     protected function callService(string $uri, $request, $responseClass = null)
     {
-        $options = $this->options;
+        $options = [];
         $headers = [];
         if (is_null($request)) {
             $method = 'GET';
@@ -56,7 +56,7 @@ class HttpServiceClientBase
         if (!empty($responseClass)) {
             $headers['Accept'] = 'application/json';
         }
-        $options['headers'] = $this->options['headers'] + $headers;
+        $options['headers'] = $headers;
         try {
             $resp = $this->httpClient->request($method, $uri, $options);
         } catch (GuzzleException $e) {
