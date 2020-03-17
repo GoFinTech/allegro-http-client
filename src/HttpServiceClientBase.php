@@ -44,7 +44,7 @@ class HttpServiceClientBase
     protected function callService(string $uri, $request, $responseClass = null)
     {
         $options = $this->options;
-        $headers = $this->options['headers'] ?? [];
+        $headers = [];
         if (is_null($request)) {
             $method = 'GET';
         }
@@ -56,7 +56,7 @@ class HttpServiceClientBase
         if (!empty($responseClass)) {
             $headers['Accept'] = 'application/json';
         }
-        $options['headers'] = $headers;
+        $options['headers'] = $this->options['headers'] + $headers;
         try {
             $resp = $this->httpClient->request($method, $uri, $options);
         } catch (GuzzleException $e) {
