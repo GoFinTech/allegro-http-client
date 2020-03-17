@@ -43,7 +43,7 @@ class HttpServiceClientBase
      */
     protected function callService(string $uri, $request, $responseClass = null)
     {
-        $options = $this->options;
+        $options = [];
         $headers = [];
         if (is_null($request)) {
             $method = 'GET';
@@ -58,7 +58,7 @@ class HttpServiceClientBase
         }
         $options['headers'] = $headers;
         try {
-            $resp = $this->httpClient->request($method, $uri, $options);
+            $resp = $this->httpClient->request($method, $uri, $options + $this->options);
         } catch (GuzzleException $e) {
             $me = get_class($this);
             throw new RuntimeException("Service call to $uri from $me failed: {$e->getMessage()}", 0, $e);
