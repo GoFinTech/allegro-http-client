@@ -24,13 +24,14 @@ class HttpServiceClientBase
     protected $httpClient;
     /** @var SerializerInterface */
     protected $serializer;
+    /** @var array */
     protected $options;
 
     public function __construct(string $endpoint, ?SerializerInterface $serializer = null, array $options = [])
     {
         $this->httpClient = new GuzzleClient([
             'base_uri' => $endpoint
-        ] + $this->options);
+        ] + $options);
         $this->serializer = $serializer ?? SerializerFactory::create();
         $this->options = $options;
     }
