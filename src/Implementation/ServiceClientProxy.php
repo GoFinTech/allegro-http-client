@@ -29,9 +29,9 @@ class ServiceClientProxy extends HttpServiceClientBase implements AdapterInterfa
     /** @var string[] indexed by method name */
     private $returnTypes;
 
-    public function __construct(string $interfaceName, string $endpoint, ?SerializerInterface $serializer)
+    public function __construct(string $interfaceName, string $endpoint, ?SerializerInterface $serializer, array $options = [])
     {
-        parent::__construct($endpoint, $serializer);
+        parent::__construct($endpoint, $serializer, $options);
 
         try {
             $interfaceInfo = new ReflectionClass($interfaceName);
