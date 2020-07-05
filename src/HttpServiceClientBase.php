@@ -3,7 +3,7 @@
 /*
  * This file is part of the Allegro framework.
  *
- * (c) 2019 Go Financial Technologies, JSC
+ * (c) 2019, 2020 Go Financial Technologies, JSC
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,8 +14,6 @@ namespace GoFinTech\Allegro\Http;
 
 use GoFinTech\Serializer\SerializerFactory;
 use GuzzleHttp\Client as GuzzleClient;
-use GuzzleHttp\Exception\GuzzleException;
-use RuntimeException;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class HttpServiceClientBase
@@ -58,12 +56,9 @@ class HttpServiceClientBase
             $headers['Accept'] = 'application/json';
         }
         $options['headers'] = $headers;
-        try {
-            $resp = $this->httpClient->request($method, $uri, $options);
-        } catch (GuzzleException $e) {
-            $me = get_class($this);
-            throw new RuntimeException("Service call to $uri from $me failed: {$e->getMessage()}", 0, $e);
-        }
+        // Silencing exception warning since we do not want to influence caller definitions
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $resp = $this->httpClient->request($method, $uri, $options);
         if (empty($responseClass) || $responseClass == 'void') {
             return null;
         }
